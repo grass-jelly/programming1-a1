@@ -1,6 +1,5 @@
 package rmit;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,11 +11,10 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         List<Customer> customerList = new ArrayList<Customer>();
-        String userOption = getUserOption("mainMenu");
+        String userOption = getUserOptionMain();
         while (!userOption.equals("5")) {
             switch (userOption) {
                 case "1":
-                    System.out.println("Customers setting");
                     customer(customerList);
                     break;
                 case "2":
@@ -27,10 +25,26 @@ public class Main {
                     System.out.println("Buying setting");
                     break;
                 case "4":
-                    System.out.println("Drawing setting");
+                    drawing();
                     break;
             }
-            userOption = getUserOption("mainMenu");
+            userOption = getUserOptionMain();
+        }
+    }
+
+    private static void drawing() {
+        String userOption = getUserOptionDrawing();
+        while (userOption.equals("1")) {
+            Drawing drawing = new Drawing();
+            int[] jackpot = drawing.generate();
+            String newDrawOption = getUserOptionNewDraw(jackpot);
+            while (!newDrawOption.equals("3")) {
+                if (newDrawOption.equals("1"))
+                    drawing.trigger1(jackpot, 1);
+                else drawing.trigger5(jackpot);
+                newDrawOption = getUserOptionNewDraw(jackpot);
+            }
+            userOption = getUserOptionDrawing();
         }
     }
 
@@ -95,10 +109,45 @@ public class Main {
                     System.out.println("4");
                     break;
             }
-            userOption = getUserOption("customerSetting");
+            userOption = getUserOptionCustomer();
         }
     }
 
+    private static String validate(String[] options) {
+        Scanner sc = new Scanner(System.in);
+        String userOption=null;
+        boolean valid = false;
+        while (!valid) {
+            System.out.print("Please choose an option: ");
+            userOption = sc.nextLine();
+            if (!Arrays.asList(options).contains(userOption))
+                System.out.println("Invalid option!");
+            else valid = true;
+        }
+        return userOption;
+    }
+
+    private static String getUserOptionMain() {
+        System.out.println("---------------------------------------------------------------------");
+        System.out.println("Main Menu");
+        System.out.println("1: Customers");
+        System.out.println("2: Shops");
+        System.out.println("3: Buying");
+        System.out.println("4: Drawing");
+        System.out.println("5: Exit");
+        String[] options = {"1", "2", "3", "4", "5"};
+        return validate(options);
+
+    }
+
+    private static String getUserOptionCustomer() {
+        System.out.println("---------------------------------------------------------------------");
+        System.out.println("Customers");
+        System.out.println("1. Add");
+        System.out.println("2. Edit");
+        System.out.println("3. Delete");
+        System.out.println("4. View");
+        System.out.println("5. Return to Main Menu");
     private static String getUserOption(String setting) {
         if (setting.equals("mainMenu")) {
             System.out.println("***************************");
@@ -119,17 +168,28 @@ public class Main {
 
 
         String[] options = {"1", "2", "3", "4", "5"};
-        Scanner sc = new Scanner(System.in);
-        String userOption=null;
-        boolean valid = false;
-        while (!valid) {
-            System.out.print("Please choose an option (1-5): ");
-            userOption = sc.nextLine();
-            if (!Arrays.asList(options).contains(userOption))
-                System.out.println("Invalid option!");
-            else valid = true;
-        }
-        return userOption;
+        return validate(options);
     }
+
+    private static String getUserOptionDrawing() {
+        System.out.println("---------------------------------------------------------------------");
+        System.out.println("Drawing");
+        System.out.println("1. New Draw");
+        System.out.println("2. Return to Main Menu");
+        String[] options = {"1", "2"};
+        return validate(options);
+    }
+
+    private static String getUserOptionNewDraw(int[] jackpot) {
+        System.out.println("---------------------------------------------------------------------");
+        System.out.println("New Draw");
+        System.out.println("Jackpot: " + Arrays.toString(jackpot));
+        System.out.println("1. Trigger once");
+            System.out.println("2. Trigger 5x");
+            System.out.println("3. Back");
+            String[] options = {"1", "2", "3"};
+            return validate(options);
+    }
+
 
 }

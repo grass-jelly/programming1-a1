@@ -1,16 +1,33 @@
 package rmit;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class Main {
-
-
-    public static void main(String[] args) throws IOException {
+    static List<Shop> listShop = new ArrayList<>();
+    public static void main(String[] args) {
         List<Customer> customerList = new ArrayList<Customer>();
+        Shop shop1 = new Shop();
+        shop1.setCode(1);
+        shop1.setAccountBalance(800000);
+        shop1.setAddress("Q2");
+        shop1.setEmail("quynh@gmail.com");
+        shop1.setOwner("Quynh");
+        shop1.setPhone("0986292444");
+        listShop.add(shop1);
+
+        Shop shop2 = new Shop();
+        shop2.setCode(2);
+        shop2.setAccountBalance(1000000);
+        shop2.setAddress("Q3");
+        shop2.setEmail("khanh@gmail.com");
+        shop2.setOwner("Khanh");
+        shop2.setPhone("0986393456");
+        listShop.add(shop2);
+
         String userOption = getUserOptionMain();
         while (!userOption.equals("5")) {
             switch (userOption) {
@@ -19,7 +36,7 @@ public class Main {
                     break;
                 case "2":
                     System.out.println("Shops setting");
-                    shop();
+                    shopsetting();
                     break;
                 case "3":
                     System.out.println("Buying setting");
@@ -48,51 +65,8 @@ public class Main {
         }
     }
 
-    private static void shop() throws IOException {
-        Scanner sc = new Scanner(System.in);
-        String userOption = getUserOption("shopSetting");
-        Shop shop = new Shop();
-        while (!userOption.equals("5")) {
-            switch (userOption) {
-                case "1":
-                    String Code, Address, Owner, Phone, Email;
-                    double accountBalance;
-                    System.out.println("Type Code: ");
-                    Code = sc.nextLine();
-                    System.out.println("Type Address: ");
-                    Address = sc.nextLine();
-                    System.out.println("Type Owner: ");
-                    Owner = sc.nextLine();
-                    System.out.println("Type Phone: ");
-                    Phone = sc.nextLine();
-                    System.out.println("Type Email: ");
-                    Email = sc.nextLine();
-                    System.out.println("Type Account Balance: ");
-                    accountBalance = sc.nextDouble();
-                    shop.add(Code, Address, Owner, Phone, Email, accountBalance);
-                    System.out.println("Add Shop Successful!!!");
-                    break;
-                case "2":
-                    System.out.println("2");
-                    break;
-                case "3":
-                    System.out.println("3");
-                    break;
-                case "4":
-                    List<String> listShop;
-                    listShop = shop.viewAll();
-                    System.out.println("***************List Shop***************");
-                    for(String a: listShop){
-                        System.out.println(a);
-                    }
-                    break;
-            }
-            userOption = getUserOption("shopSetting");
-        }
-    }
-
     private static void customer(List<Customer> customerList) {
-        String userOption = getUserOption("customerSetting");
+        String userOption = getUserOptionCustomer();
 
         while (!userOption.equals("5")) {
             switch (userOption) {
@@ -107,6 +81,87 @@ public class Main {
                     break;
                 case "4":
                     System.out.println("4");
+                    break;
+            }
+            userOption = getUserOptionCustomer();
+        }
+    }
+
+    private static void shopsetting() {
+        String userOption = getUserOptionShop();
+        Scanner sc = new Scanner(System.in);
+        Shop shopsetting = new Shop();
+        int Code;
+        String Address, Email, Owner, Phone;
+        double AccountBalance;
+
+        while (!userOption.equals("5")) {
+            switch (userOption) {
+                case "1":
+
+                    System.out.println("Please type the Code: ");
+                    Code = sc.nextInt();
+                    System.out.println("Please type the Address: ");
+                    Address = sc.nextLine();
+                    System.out.println("Please type the Owner: ");
+                    Owner = sc.nextLine();
+                    System.out.println("Please type the Email: ");
+                    Email = sc.nextLine();
+                    System.out.println("Please type the Phone: ");
+                    Phone = sc.nextLine();
+                    System.out.println("Please type the Account Balance: ");
+                    AccountBalance = sc.nextDouble();
+
+                    shopsetting.setCode(Code);
+                    shopsetting.setAddress(Address);
+                    shopsetting.setOwner(Owner);
+                    shopsetting.setEmail(Email);
+                    shopsetting.setPhone(Phone);
+                    shopsetting.setAccountBalance(AccountBalance);
+
+                    listShop.add(shopsetting);
+                    System.out.println("Add Successful!!");
+
+                    break;
+                case "2":
+                    int index = 0;
+                    System.out.println("Please type the code shop: ");
+                    Code = sc.nextInt();
+                    System.out.println("Please type the Address: ");
+                    Address = sc.nextLine();
+                    System.out.println("Please type the Owner: ");
+                    Owner = sc.nextLine();
+                    System.out.println("Please type the Email: ");
+                    Email = sc.nextLine();
+                    System.out.println("Please type the Phone: ");
+                    Phone = sc.nextLine();
+                    System.out.println("Please type the Account Balance: ");
+                    AccountBalance = sc.nextDouble();
+                    for(Shop item: listShop){
+                        if(item.getCode() == Code){
+                            index = listShop.indexOf(item);
+                        }
+                    }
+                    listShop.set(index, new Shop(Code, Address, Owner, Email, Phone, AccountBalance));
+                    System.out.println("Edit Successful!!!");
+                    break;
+                case "3":
+                    System.out.println("Please type the code shop: ");
+                    Code = sc.nextInt();
+                    for(Shop item: listShop){
+                        if(item.getCode() == Code){
+                            listShop.remove(item);
+                            System.out.println("Delete Successful!!");
+                            break;
+                        }
+                    }
+                    break;
+                case "4":
+                    System.out.println("*********************List Shops*********************");
+                    System.out.println("Code    Address    Owner    Phone    Email    AccountBalance");
+                    for(Shop item: listShop){
+                        System.out.println(item.getCode() + "\t" + item.getAddress() + "\t" + item.getOwner() + "\t" + item.getPhone() + "\t" + item.getEmail() + "\t" + item.getAccountBalance());
+                    }
                     break;
             }
             userOption = getUserOptionCustomer();
@@ -148,25 +203,18 @@ public class Main {
         System.out.println("3. Delete");
         System.out.println("4. View");
         System.out.println("5. Return to Main Menu");
-    private static String getUserOption(String setting) {
-        if (setting.equals("mainMenu")) {
-            System.out.println("***************************");
-            System.out.println("Main Menu");
-            System.out.println("1: Customers");
-            System.out.println("2: Shops");
-            System.out.println("3: Buying");
-            System.out.println("4: Drawing");
-            System.out.println("5: Exit");
-        } else {
-            System.out.println("***************************");
-            System.out.println("1. Add");
-            System.out.println("2. Edit");
-            System.out.println("3. Delete");
-            System.out.println("4. View");
-            System.out.println("5. Return to Main Menu");
-        }
+        String[] options = {"1", "2", "3", "4", "5"};
+        return validate(options);
+    }
 
-
+    private static String getUserOptionShop() {
+        System.out.println("---------------------------------------------------------------------");
+        System.out.println("Shops");
+        System.out.println("1. Add");
+        System.out.println("2. Edit");
+        System.out.println("3. Delete");
+        System.out.println("4. View");
+        System.out.println("5. Return to Main Menu");
         String[] options = {"1", "2", "3", "4", "5"};
         return validate(options);
     }

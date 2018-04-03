@@ -1,13 +1,12 @@
 package rmit;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    static List<Shop> listShop = new ArrayList<>();
+    private static List<Shop> listShop = new ArrayList<>();
     public static void main(String[] args) {
         List<Customer> customerList = new ArrayList<Customer>();
         Shop shop1 = new Shop();
@@ -90,7 +89,7 @@ public class Main {
     private static void shopsetting() {
         String userOption = getUserOptionShop();
         Scanner sc = new Scanner(System.in);
-        Shop shopsetting = new Shop();
+        Shop shopST = new Shop();
         int Code;
         String Address, Email, Owner, Phone;
         double AccountBalance;
@@ -98,9 +97,9 @@ public class Main {
         while (!userOption.equals("5")) {
             switch (userOption) {
                 case "1":
-
                     System.out.println("Please type the Code: ");
                     Code = sc.nextInt();
+                    sc.nextLine();
                     System.out.println("Please type the Address: ");
                     Address = sc.nextLine();
                     System.out.println("Please type the Owner: ");
@@ -112,21 +111,22 @@ public class Main {
                     System.out.println("Please type the Account Balance: ");
                     AccountBalance = sc.nextDouble();
 
-                    shopsetting.setCode(Code);
-                    shopsetting.setAddress(Address);
-                    shopsetting.setOwner(Owner);
-                    shopsetting.setEmail(Email);
-                    shopsetting.setPhone(Phone);
-                    shopsetting.setAccountBalance(AccountBalance);
+                    shopST.setCode(Code);
+                    shopST.setAddress(Address);
+                    shopST.setOwner(Owner);
+                    shopST.setEmail(Email);
+                    shopST.setPhone(Phone);
+                    shopST.setAccountBalance(AccountBalance);
 
-                    listShop.add(shopsetting);
+                    listShop.add(shopST);
                     System.out.println("Add Successful!!");
-
                     break;
                 case "2":
                     int index = 0;
+                    System.out.println("************Edit Mode************");
                     System.out.println("Please type the code shop: ");
                     Code = sc.nextInt();
+                    sc.nextLine();
                     System.out.println("Please type the Address: ");
                     Address = sc.nextLine();
                     System.out.println("Please type the Owner: ");
@@ -158,13 +158,13 @@ public class Main {
                     break;
                 case "4":
                     System.out.println("*********************List Shops*********************");
-                    System.out.println("Code    Address    Owner    Phone    Email    AccountBalance");
+                    System.out.println("Code    Address    Owner    Email    Phone    AccountBalance");
                     for(Shop item: listShop){
-                        System.out.println(item.getCode() + "\t" + item.getAddress() + "\t" + item.getOwner() + "\t" + item.getPhone() + "\t" + item.getEmail() + "\t" + item.getAccountBalance());
+                        System.out.println(item.getCode() + "\t" + item.getAddress() + "\t" + item.getOwner() + "\t" + item.getEmail() + "\t" + item.getPhone() + "\t" + item.getAccountBalance());
                     }
                     break;
             }
-            userOption = getUserOptionCustomer();
+            userOption = getUserOptionShop();
         }
     }
 

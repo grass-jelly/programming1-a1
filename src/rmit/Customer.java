@@ -17,13 +17,15 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "name='" + name + '\'' +
-                ", birthdate='" + birthdate + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        return String.format("%-20.20s  %-20.20s  %-20.20s  %-20.20s  %-20.20s",this.name,this.birthdate,this.address,this.phone,this.email);
+
+//        return "Customer{" +
+//                "name='" + name + '\'' +
+//                ", birthdate='" + birthdate + '\'' +
+//                ", address='" + address + '\'' +
+//                ", phone='" + phone + '\'' +
+//                ", email='" + email + '\'' +
+//                '}';
     }
 
     public String getName() {

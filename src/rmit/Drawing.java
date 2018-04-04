@@ -9,7 +9,7 @@ public class Drawing {
         int[] numSet = new int[6];
         Random random = new Random();
         for (int i = 0; i < 6; i++) {
-            numSet[i] = random.nextInt(45) + 1;
+            numSet[i] = random.nextInt(46);
         }
         Arrays.sort(numSet);
         return numSet;
@@ -26,7 +26,6 @@ public class Drawing {
            cnt++;
         } while (!Arrays.equals(jackpot, numSet));
         System.out.println("Number of times before matching: " + cnt);
-        System.out.println("---------------------------------------------------------------------");
         return cnt;
     }
 
@@ -45,7 +44,6 @@ public class Drawing {
 
         int avg = sum/5;
         System.out.println("Average number of times one needs to buy to become a winner: " + avg);
-        System.out.println("---------------------------------------------------------------------");
         return avg;
     }
 

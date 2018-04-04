@@ -9,6 +9,14 @@ public class Main {
     private static List<Shop> listShop = new ArrayList<>();
     public static void main(String[] args) {
         List<Customer> customerList = new ArrayList<Customer>();
+        Customer customer1 = new Customer("Linh Do", "1997-05-04", "702 Nguyen Van Linh, D7",
+                "0912900300", "linhdo@gmail.com");
+        Customer customer2 = new Customer("John Doe", "1990-09-01", "42 Nguyen Hue, D1",
+                "0912900400", "johndoe@gmail.com");
+        Customer customer3 = new Customer("Mary Angelou", "1980-04-04",
+                "1050 College St, D2", "0912900800", "maryangelou@gmail.com");
+        customerList.addAll(Arrays.asList(customer1, customer2, customer3));
+
         Shop shop1 = new Shop();
         shop1.setCode(1);
         shop1.setAccountBalance(800000);
@@ -66,11 +74,12 @@ public class Main {
 
     private static void customer(List<Customer> customerList) {
         String userOption = getUserOptionCustomer();
-
         while (!userOption.equals("5")) {
+            Validation v = new Validation();
             switch (userOption) {
                 case "1":
-                    System.out.println("1");
+                    customerList.add(new Customer(v.getName(), v.getBirthdate(), v.getAddress(), v.getPhone(), v.getEmail()));
+                    System.out.println("Add Successful!!");
                     break;
                 case "2":
                     System.out.println("2");
@@ -79,7 +88,11 @@ public class Main {
                     System.out.println("3");
                     break;
                 case "4":
-                    System.out.println("4");
+                    System.out.printf("%-22s%-22s%-22s%-22s%-22s\n","Name","Birthdate","Address","Phone","Email");
+                    System.out.println("---------------------------------------------------------------------------" +
+                            "---------------------------------");
+                    for (Customer customer : customerList)
+                        System.out.println(customer);
                     break;
             }
             userOption = getUserOptionCustomer();
@@ -168,22 +181,9 @@ public class Main {
         }
     }
 
-    private static String validate(String[] options) {
-        Scanner sc = new Scanner(System.in);
-        String userOption=null;
-        boolean valid = false;
-        while (!valid) {
-            System.out.print("Please choose an option: ");
-            userOption = sc.nextLine();
-            if (!Arrays.asList(options).contains(userOption))
-                System.out.println("Invalid option!");
-            else valid = true;
-        }
-        return userOption;
-    }
-
     private static String getUserOptionMain() {
-        System.out.println("---------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------" +
+                "---------------------------------");
         System.out.println("Main Menu");
         System.out.println("1: Customers");
         System.out.println("2: Shops");
@@ -191,12 +191,13 @@ public class Main {
         System.out.println("4: Drawing");
         System.out.println("5: Exit");
         String[] options = {"1", "2", "3", "4", "5"};
-        return validate(options);
+        return Validation.validateMenu(options);
 
     }
 
     private static String getUserOptionCustomer() {
-        System.out.println("---------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------" +
+                "---------------------------------");
         System.out.println("Customers");
         System.out.println("1. Add");
         System.out.println("2. Edit");
@@ -204,11 +205,12 @@ public class Main {
         System.out.println("4. View");
         System.out.println("5. Return to Main Menu");
         String[] options = {"1", "2", "3", "4", "5"};
-        return validate(options);
+        return Validation.validateMenu(options);
     }
 
     private static String getUserOptionShop() {
-        System.out.println("---------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------" +
+                "---------------------------------");
         System.out.println("Shops");
         System.out.println("1. Add");
         System.out.println("2. Edit");
@@ -216,27 +218,29 @@ public class Main {
         System.out.println("4. View");
         System.out.println("5. Return to Main Menu");
         String[] options = {"1", "2", "3", "4", "5"};
-        return validate(options);
+        return Validation.validateMenu(options);
     }
 
     private static String getUserOptionDrawing() {
-        System.out.println("---------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------" +
+                "---------------------------------");
         System.out.println("Drawing");
         System.out.println("1. New Draw");
         System.out.println("2. Return to Main Menu");
         String[] options = {"1", "2"};
-        return validate(options);
+        return Validation.validateMenu(options);
     }
 
     private static String getUserOptionNewDraw(int[] jackpot) {
-        System.out.println("---------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------" +
+                "---------------------------------");
         System.out.println("New Draw");
         System.out.println("Jackpot: " + Arrays.toString(jackpot));
         System.out.println("1. Trigger once");
             System.out.println("2. Trigger 5x");
             System.out.println("3. Back");
             String[] options = {"1", "2", "3"};
-            return validate(options);
+            return Validation.validateMenu(options);
     }
 
 

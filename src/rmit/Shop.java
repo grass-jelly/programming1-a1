@@ -21,6 +21,12 @@ public class Shop {
         this.accountBalance = accountBalance;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%-20.20s  %-20.20s  %-20.20s  %-20.20s  %-20.20s %-20.20s" , this.Code, this.Address,
+                this.Owner, this.Email, this.Phone, this.accountBalance);
+    }
+
     public int getCode() {
         return Code;
     }

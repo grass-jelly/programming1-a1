@@ -22,6 +22,39 @@ public class Validation {
         return userOption;
     }
 
+    public double getAccountBalance(){
+        double AccountBalanceInput;
+        Scanner sc;
+        while(true){
+            System.out.print("Please enter the shop's Account Balance: ");
+            sc = new Scanner(System.in);
+            if(sc.hasNextDouble()){
+                AccountBalanceInput = sc.nextDouble();
+                break;
+            }else {
+                System.out.println("Wrong Input!!!");
+            }
+        }
+        return AccountBalanceInput;
+    }
+
+    public int getCodeInput(){
+        int CodeInput;
+        Scanner sc;
+        while(true){
+            System.out.print("Please enter the shop's code: ");
+            sc = new Scanner(System.in);
+            if(sc.hasNextInt()){
+                CodeInput = sc.nextInt();
+                sc.nextLine();
+                break;
+            }else {
+                System.out.println("Wrong Input!!!");
+            }
+        }
+        return CodeInput;
+    }
+
     public String getName() {
         Scanner sc = new Scanner(System.in);
         String str=null;

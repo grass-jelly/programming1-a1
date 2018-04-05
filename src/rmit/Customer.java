@@ -1,13 +1,15 @@
 package rmit;
 
 public class Customer {
+    private int id;
     private String name;
     private String birthdate;
     private String address;
     private String phone;
     private String email;
 
-    public Customer(String name, String birthdate, String address, String phone, String email) {
+    public Customer(int id, String name, String birthdate, String address, String phone, String email) {
+        this.id = id;
         this.name = name;
         this.birthdate = birthdate;
         this.address = address;
@@ -17,15 +19,15 @@ public class Customer {
 
     @Override
     public String toString() {
-        return String.format("%-20.20s  %-20.20s  %-20.20s  %-20.20s  %-20.20s",this.name,this.birthdate,this.address,this.phone,this.email);
+        return String.format("%05d  %-20.20s  %-20.20s  %-20.20s  %-20.20s  %-20.20s",this.id, this.name,this.birthdate,this.address,this.phone,this.email);
+    }
 
-//        return "Customer{" +
-//                "name='" + name + '\'' +
-//                ", birthdate='" + birthdate + '\'' +
-//                ", address='" + address + '\'' +
-//                ", phone='" + phone + '\'' +
-//                ", email='" + email + '\'' +
-//                '}';
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

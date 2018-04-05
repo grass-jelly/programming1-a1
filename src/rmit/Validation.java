@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +21,25 @@ public class Validation {
             else valid = true;
         }
         return userOption;
+    }
+
+
+    public int getId(Set<Integer> ids) {
+        Scanner sc = new Scanner(System.in);
+        int input=0;
+        while (true) {
+            System.out.print("Please enter the customer/shop ID to edit/delete: ");
+            if (!sc.hasNextInt()) {
+                sc.nextLine();
+                System.out.println("Invalid ID!");
+            }
+            else {
+                input = sc.nextInt();
+                if (!ids.contains(input)) System.out.println("Invalid ID!");
+                else break;
+            }
+        }
+        return input;
     }
 
     public double getAccountBalance(){

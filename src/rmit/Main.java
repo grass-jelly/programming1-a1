@@ -1,22 +1,22 @@
 package rmit;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
-
+    private static Map<Integer, Customer> customerList = new HashMap<>();
+    private static int customerID=1;
     public static void main(String[] args) {
         List<Shop> listShop = new ArrayList<>();
-        List<Customer> customerList = new ArrayList<Customer>();
-        Customer customer1 = new Customer("Linh Do", "1997-05-04", "702 Nguyen Van Linh, D7",
+
+        Customer customer1 = new Customer(customerID++, "Linh Do", "1997-05-04", "702 Nguyen Van Linh, D7",
                 "0912900300", "linhdo@gmail.com");
-        Customer customer2 = new Customer("John Doe", "1990-09-01", "42 Nguyen Hue, D1",
+        Customer customer2 = new Customer(customerID++, "John Doe", "1990-09-01", "42 Nguyen Hue, D1",
                 "0912900400", "johndoe@gmail.com");
-        Customer customer3 = new Customer("Mary Angelou", "1980-04-04",
+        Customer customer3 = new Customer(customerID++, "Mary Angelou", "1980-04-04",
                 "1050 College St, D2", "0912900800", "maryangelou@gmail.com");
-        customerList.addAll(Arrays.asList(customer1, customer2, customer3));
+        customerList.put(1, customer1);
+        customerList.put(2, customer2);
+        customerList.put(3, customer3);
 
         Shop shop1 = new Shop(1, "100 Dien Bien Phu, Q10", "Nghi Quynh", "quynh@gmail.com",
                 "0986292444", 800000);
@@ -32,14 +32,13 @@ public class Main {
                     customer(customerList);
                     break;
                 case "2":
-                    System.out.println("Shops setting");
                     shopsetting(listShop);
                     break;
                 case "3":
-                    System.out.println("Buying setting");
+                    drawing();
                     break;
                 case "4":
-                    drawing();
+                    buying();
                     break;
             }
             userOption = getUserOptionMain();
@@ -51,6 +50,16 @@ public class Main {
         while (userOption.equals("1")) {
             Drawing drawing = new Drawing();
             int[] jackpot = drawing.generate();
+            System.out.println("Jackpot: " + Arrays.toString(jackpot));
+            userOption = getUserOptionDrawing();
+        }
+    }
+
+    private static void buying() {
+        String userOption = getUserOptionBuying();
+        while (userOption.equals("1")) {
+            Drawing drawing = new Drawing();
+            int[] jackpot = drawing.generate();
             String newDrawOption = getUserOptionNewDraw(jackpot);
             while (!newDrawOption.equals("3")) {
                 if (newDrawOption.equals("1"))
@@ -58,31 +67,58 @@ public class Main {
                 else drawing.trigger5(jackpot);
                 newDrawOption = getUserOptionNewDraw(jackpot);
             }
-            userOption = getUserOptionDrawing();
+            userOption = getUserOptionBuying();
         }
     }
 
-    private static void customer(List<Customer> customerList) {
+    private static void customer(Map<Integer, Customer> customerList) {
         String userOption = getUserOptionCustomer();
+        int id;
         while (!userOption.equals("5")) {
             Validation v = new Validation();
             switch (userOption) {
                 case "1":
-                    customerList.add(new Customer(v.getName(), v.getBirthdate(), v.getAddress(), v.getPhone(), v.getEmail()));
+                    id = customerID++;
+                    customerList.put(id, new Customer(id, v.getName(), v.getBirthdate(), v.getAddress(), v.getPhone(), v.getEmail()));
                     System.out.println("Add Successful!!");
                     break;
                 case "2":
                     System.out.println("2");
+                    // get id
+                    id = v.getId(customerList.keySet());
+                    // get option
+                    userOption = getCustomerEditOption();
+                    Customer customer = customerList.get(id);
+                    switch (userOption) {
+                        case "1":
+                            customer.setName(v.getName());
+                            break;
+                        case "2":
+                            customer.setBirthdate(v.getBirthdate());
+                            break;
+                        case "3":
+                            customer.setAddress(v.getAddress());
+                            break;
+                        case "4":
+                            customer.setPhone(v.getPhone());
+                            break;
+                        case "5":
+                            customer.setEmail(v.getEmail());
+                            break;
+                    }
+                    System.out.println("Edit Successful!!");
                     break;
                 case "3":
-                    System.out.println("3");
+                    id = v.getId(customerList.keySet());
+                    customerList.remove(id);
+                    System.out.println("Delete Successful!!");
                     break;
                 case "4":
-                    System.out.printf("%-22s%-22s%-22s%-22s%-22s\n","Name","Birthdate","Address","Phone","Email");
+                    System.out.printf("%-7s%-22s%-22s%-22s%-22s%-22s\n","ID", "Name","Birthdate","Address","Phone","Email");
                     System.out.println("---------------------------------------------------------------------------" +
-                            "---------------------------------");
-                    for (Customer customer : customerList)
-                        System.out.println(customer);
+                            "----------------------------------------");
+                    for (Customer cus : customerList.values())
+                        System.out.println(cus);
                     break;
             }
             userOption = getUserOptionCustomer();
@@ -266,14 +302,28 @@ public class Main {
         return Validation.validateMenu(options);
     }
 
+    private static String getCustomerEditOption() {
+        System.out.println("---------------------------------------------------------------------------" +
+                "----------------------------------------");
+        System.out.println("Edit Customer");
+        System.out.println("1: Name");
+        System.out.println("2: Birthdate");
+        System.out.println("3: Address");
+        System.out.println("4: Phone");
+        System.out.println("5: Email");
+        String[] options = {"1", "2", "3", "4", "5"};
+        return Validation.validateMenu(options);
+
+    }
+
     private static String getUserOptionMain() {
         System.out.println("---------------------------------------------------------------------------" +
-                "---------------------------------");
+                "----------------------------------------");
         System.out.println("Main Menu");
         System.out.println("1: Customers");
         System.out.println("2: Shops");
-        System.out.println("3: Buying");
-        System.out.println("4: Drawing");
+        System.out.println("3: Drawing");
+        System.out.println("4: Buying");
         System.out.println("5: Exit");
         String[] options = {"1", "2", "3", "4", "5"};
         return Validation.validateMenu(options);
@@ -282,13 +332,13 @@ public class Main {
 
     private static String getUserOptionCustomer() {
         System.out.println("---------------------------------------------------------------------------" +
-                "---------------------------------");
+                "----------------------------------------");
         System.out.println("Customers");
-        System.out.println("1. Add");
-        System.out.println("2. Edit");
-        System.out.println("3. Delete");
-        System.out.println("4. View");
-        System.out.println("5. Return to Main Menu");
+        System.out.println("1: Add");
+        System.out.println("2: Edit");
+        System.out.println("3: Delete");
+        System.out.println("4: View");
+        System.out.println("5: Return to Main Menu");
         String[] options = {"1", "2", "3", "4", "5"};
         return Validation.validateMenu(options);
     }
@@ -306,20 +356,32 @@ public class Main {
         return Validation.validateMenu(options);
     }
 
-    private static String getUserOptionDrawing() {
+    private static String getUserOptionBuying() {
         System.out.println("---------------------------------------------------------------------------" +
-                "---------------------------------");
-        System.out.println("Drawing");
-        System.out.println("1. New Draw");
-        System.out.println("2. Return to Main Menu");
+                "----------------------------------------");
+        System.out.println("Buying");
+        System.out.println("1: New Simulation");
+        System.out.println("2: Return to Main Menu");
         String[] options = {"1", "2"};
         return Validation.validateMenu(options);
     }
 
+    private static String getUserOptionDrawing() {
+        System.out.println("---------------------------------------------------------------------------" +
+                "----------------------------------------");
+        System.out.println("Drawing");
+        System.out.println("1: New Draw");
+        System.out.println("2: Return to Main Menu");
+        String[] options = {"1", "2"};
+        return Validation.validateMenu(options);
+    }
+
+
+
     private static String getUserOptionNewDraw(int[] jackpot) {
         System.out.println("---------------------------------------------------------------------------" +
-                "---------------------------------");
-        System.out.println("New Draw");
+                "----------------------------------------");
+        System.out.println("New Simulation");
         System.out.println("Jackpot: " + Arrays.toString(jackpot));
         System.out.println("1. Trigger once");
         System.out.println("2. Trigger 5x");

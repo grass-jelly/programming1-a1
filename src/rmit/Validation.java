@@ -28,7 +28,7 @@ public class Validation {
 
     public int getId(Set<Integer> ids) {
         Scanner sc = new Scanner(System.in);
-        int id=0;
+        int id;
         String input;
         while (true) {
             System.out.println("Please enter the customer/shop ID to edit/delete: ");
@@ -45,21 +45,6 @@ public class Validation {
         return id;
     }
 
-    public double getAccountBalance(){
-        double AccountBalanceInput;
-        Scanner sc;
-        while(true){
-            System.out.println("Please enter the shop's Account Balance: ");
-            sc = new Scanner(System.in);
-            if(sc.hasNextDouble()){
-                AccountBalanceInput = sc.nextDouble();
-                break;
-            }else {
-                System.out.println("Wrong Input!!!");
-            }
-        }
-        return AccountBalanceInput;
-    }
 
 
     public String getName() {

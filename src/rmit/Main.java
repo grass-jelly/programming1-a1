@@ -7,7 +7,6 @@ public class Main {
     private static Map<Integer, Shop> shopList = new HashMap<>();
     private static int customerID=1, shopID=1;
     public static void main(String[] args) {
-        List<Shop> listShop = new ArrayList<>();
 
         Customer customer1 = new Customer(customerID++, "Linh Do", "1997-05-04", "702 Nguyen Van Linh, D7",
                 "0912900300", "linhdo@gmail.com");
@@ -126,7 +125,7 @@ public class Main {
     private static void shop(Map<Integer, Shop> shopList) {
         String userOption = getUserOptionShop();
         int id;
-        Validation v = new Validation();
+        ValidationShop v = new ValidationShop();
 
         while (!userOption.equals("5")) {
             switch (userOption) {

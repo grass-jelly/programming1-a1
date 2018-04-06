@@ -23,7 +23,7 @@ public class Shop {
 
     @Override
     public String toString() {
-        return String.format("%-20.20s  %-20.20s  %-20.20s  %-20.20s  %-20.20s %-20.20s" , this.Code, this.Address,
+        return String.format("%05d  %-20.20s  %-20.20s  %-20.20s  %-20.20s  %.3f" , this.Code, this.Address,
                 this.Owner, this.Email, this.Phone, this.accountBalance);
     }
 

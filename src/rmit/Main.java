@@ -4,7 +4,8 @@ import java.util.*;
 
 public class Main {
     private static Map<Integer, Customer> customerList = new HashMap<>();
-    private static int customerID=1;
+    private static Map<Integer, Shop> shopList = new HashMap<>();
+    private static int customerID=1, shopID=1;
     public static void main(String[] args) {
         List<Shop> listShop = new ArrayList<>();
 
@@ -18,12 +19,12 @@ public class Main {
         customerList.put(2, customer2);
         customerList.put(3, customer3);
 
-        Shop shop1 = new Shop(1, "100 Dien Bien Phu, Q10", "Nghi Quynh", "quynh@gmail.com",
+        Shop shop1 = new Shop(shopID++, "100 Dien Bien Phu, Q10", "Nghi Quynh", "quynh@gmail.com",
                 "0986292444", 800000);
-        Shop shop2 = new Shop(2, "256 Dinh Tien Hoang, Q.GoVap", "Nhut Khanh", "khanh@gmail.com",
+        Shop shop2 = new Shop(shopID++, "256 Dinh Tien Hoang, Q.GoVap", "Nhut Khanh", "khanh@gmail.com",
                 "0986393456", 1000000);
-
-        listShop.addAll(Arrays.asList(shop1, shop2));
+        shopList.put(1, shop1);
+        shopList.put(2, shop2);
 
         String userOption = getUserOptionMain();
         while (!userOption.equals("5")) {
@@ -32,7 +33,7 @@ public class Main {
                     customer(customerList);
                     break;
                 case "2":
-                    shopsetting(listShop);
+                    shop(shopList);
                     break;
                 case "3":
                     drawing();
@@ -83,7 +84,7 @@ public class Main {
                     System.out.println("Add Successful!!");
                     break;
                 case "2":
-                    System.out.println("2");
+                    viewCustomer();
                     // get id
                     id = v.getId(customerList.keySet());
                     // get option
@@ -109,196 +110,82 @@ public class Main {
                     System.out.println("Edit Successful!!");
                     break;
                 case "3":
+                    viewCustomer();
                     id = v.getId(customerList.keySet());
                     customerList.remove(id);
                     System.out.println("Delete Successful!!");
                     break;
                 case "4":
-                    System.out.printf("%-7s%-22s%-22s%-22s%-22s%-22s\n","ID", "Name","Birthdate","Address","Phone","Email");
-                    System.out.println("---------------------------------------------------------------------------" +
-                            "----------------------------------------");
-                    for (Customer cus : customerList.values())
-                        System.out.println(cus);
+                    viewCustomer();
                     break;
             }
             userOption = getUserOptionCustomer();
         }
     }
 
-    private static void shopsetting(List<Shop> listShop) {
+    private static void shop(Map<Integer, Shop> shopList) {
         String userOption = getUserOptionShop();
-        Validation valid;
-        Scanner sc;
-        int Code;
-        String Address, Email, Owner, Phone;
-        double AccountBalance;
+        int id;
+        Validation v = new Validation();
 
         while (!userOption.equals("5")) {
             switch (userOption) {
                 case "1":
-                    valid = new Validation();
-                    Code = valid.getCodeInput();
-                    Address = valid.getAddress();
-                    Owner = valid.getName();
-                    Email = valid.getEmail();
-                    Phone = valid.getPhone();
-                    AccountBalance = valid.getAccountBalance();
-                    Shop shopST = new Shop(Code, Address,Owner, Email, Phone, AccountBalance);
-                    listShop.add(shopST);
+                    id = shopID++;
+                    shopList.put(id, new Shop(id, v.getAddress(), v.getName(), v.getEmail(), v.getPhone(), v.getAccountBalance()));
                     System.out.println("Add Successful!!");
                     break;
                 case "2":
-
-                    String userEditOption = getUserEditOption();
-                    while(!userEditOption.equals("3")){
-                        switch (userEditOption){
-                            case "1":
-                                editAllFieldShop(listShop);
-                                break;
-                            case "2":
-                                String userFieldEditOption = getUserFieldEditOption();
-                                while(!userFieldEditOption.equals("6")){
-                                    switch (userFieldEditOption){
-                                        case "1":
-                                            editOneFieldShop(listShop, "Address");
-                                            break;
-                                        case "2":
-                                            editOneFieldShop(listShop, "Owner");
-                                            break;
-                                        case "3":
-                                            editOneFieldShop(listShop, "Email");
-                                            break;
-                                        case "4":
-                                            editOneFieldShop(listShop, "Phone");
-                                            break;
-                                        case "5":
-                                            editOneFieldShop(listShop, "AccountBalance");
-                                            break;
-                                    }
-                                    userFieldEditOption = getUserFieldEditOption();
-                                }
-                                break;
-                        }
-                        userEditOption = getUserEditOption();
+                    viewShop();
+                    // get id
+                    id = v.getId(shopList.keySet());
+                    // get option
+                    userOption = getShopEditOption();
+                    Shop shop = shopList.get(id);
+                    switch (userOption) {
+                        case "1":
+                            shop.setAddress(v.getAddress());
+                            break;
+                        case "2":
+                            shop.setOwner(v.getName());
+                            break;
+                        case "3":
+                            shop.setPhone(v.getPhone());
+                            break;
+                        case "4":
+                            shop.setEmail(v.getEmail());
+                            break;
+                        case "5":
+                            shop.setAccountBalance(v.getAccountBalance());
+                            break;
                     }
+                    System.out.println("Edit Successful!!");
                     break;
                 case "3":
-                    sc = new Scanner(System.in);
-                    System.out.println("Please type the code shop: ");
-                    Code = sc.nextInt();
-                    for(Shop item: listShop){
-                        if(item.getCode() == Code){
-                            listShop.remove(item);
-                            System.out.println("Delete Successful!!");
-                            break;
-                        }
-                    }
+                    viewShop();
+                    id = v.getId(shopList.keySet());
+                    shopList.remove(id);
+                    System.out.println("Delete Successful!!");
                     break;
                 case "4":
-                    System.out.printf("%-22s%-22s%-22s%-22s%-22s%-22s\n","Code","Address","Owner","Email","Phone","AccountBalance");
-                    System.out.println("---------------------------------------------------------------------------" +
-                            "----------------------------------------------------");
-                    for(Shop item: listShop){
-                        System.out.println(item);
-                    }
+                    viewShop();
                     break;
             }
             userOption = getUserOptionShop();
         }
     }
 
-    private static void editOneFieldShop(List<Shop> listShop, String nameField){
-        Validation valid = new Validation();
-        Shop shop = new Shop();
-        Scanner sc = new Scanner(System.in);
-        String Address, Owner, Email, Phone;
-        double AccountBalance;
-        int index = 0;
-        System.out.println("************Edit Mode************");
-        System.out.println("Please enter the shop's code that you want to modify: ");
-        int Code = sc.nextInt();
-        sc.nextLine();
-        for(Shop item: listShop){
-            if(item.getCode() == Code){
-                index = listShop.indexOf(item);
-                shop = item;
-            }
-        }
-        switch (nameField){
-            case "Address":
-                System.out.println("New Address");
-                Address = valid.getAddress();
-                listShop.set(index, new Shop(Code, Address, shop.getOwner(), shop.getEmail(), shop.getPhone(),
-                        shop.getAccountBalance()));
-                System.out.println("Edit Successful!!!");
-                break;
-            case "Owner":
-                System.out.println("New Owner");
-                Owner = valid.getName();
-                listShop.set(index, new Shop(Code, shop.getAddress(), Owner, shop.getEmail(), shop.getPhone(),
-                        shop.getAccountBalance()));
-                System.out.println("Edit Successful!!!");
-                break;
-            case "Email":
-                System.out.println("New Email");
-                Email = valid.getEmail();
-                listShop.set(index, new Shop(Code, shop.getAddress(), shop.getOwner(), Email, shop.getPhone(),
-                        shop.getAccountBalance()));
-                System.out.println("Edit Successful!!!");
-                break;
-            case "Phone":
-                System.out.println("New Phone Number");
-                Phone = valid.getPhone();
-                listShop.set(index, new Shop(Code, shop.getAddress(), shop.getOwner(), shop.getEmail(), Phone,
-                        shop.getAccountBalance()));
-                System.out.println("Edit Successful!!!");
-                break;
-            case "AccountBalance":
-                System.out.println("New Account Balance Number");
-                AccountBalance = valid.getAccountBalance();
-                listShop.set(index, new Shop(Code, shop.getAddress(), shop.getOwner(), shop.getEmail(),
-                        shop.getPhone(), AccountBalance));
-                System.out.println("Edit Successful!!!");
-                break;
-        }
-    }
+    private static String getShopEditOption(){
 
-    private static void editAllFieldShop(List<Shop> listShop){
-        Scanner sc;
-        String Address, Owner, Email, Phone;
-        double AccountBalance;
-        sc = new Scanner(System.in);
-        int index = 0;
-        System.out.println("************Edit Mode************");
-        System.out.println("Please type the shop's code that you want to modify: ");
-        int Code = sc.nextInt();
-        sc.nextLine();
-        System.out.println("Please type the Address: ");
-        Address = sc.nextLine();
-        System.out.println("Please type the Owner: ");
-        Owner = sc.nextLine();
-        System.out.println("Please type the Email: ");
-        Email = sc.nextLine();
-        System.out.println("Please type the Phone: ");
-        Phone = sc.nextLine();
-        System.out.println("Please type the Account Balance: ");
-        AccountBalance = sc.nextDouble();
-        for(Shop item: listShop){
-            if(item.getCode() == Code){
-                index = listShop.indexOf(item);
-            }
-        }
-        listShop.set(index, new Shop(Code, Address, Owner, Email, Phone, AccountBalance));
-        System.out.println("Edit Successful!!!");
-    }
-
-    private static String getUserEditOption(){
-
-        String[] options = {"1", "2", "3"};
-        System.out.println("**********************Edit Mode**********************");
-        System.out.println("1. Modify all fields");
-        System.out.println("2. Modify One field.");
-        System.out.println("3. Return to Shop Menu");
+        System.out.println("---------------------------------------------------------------------------" +
+                "----------------------------------------");
+        System.out.println("Edit Shop");
+        System.out.println("1: Address");
+        System.out.println("2: Owner");
+        System.out.println("3: Phone");
+        System.out.println("4: Email");
+        System.out.println("5: Account Balance");
+        String[] options = {"1", "2", "3", "4", "5"};
         return Validation.validateMenu(options);
     }
 
@@ -345,7 +232,7 @@ public class Main {
 
     private static String getUserOptionShop() {
         System.out.println("---------------------------------------------------------------------------" +
-                "---------------------------------");
+                "----------------------------------------");
         System.out.println("Shops");
         System.out.println("1. Add");
         System.out.println("2. Edit");
@@ -376,8 +263,6 @@ public class Main {
         return Validation.validateMenu(options);
     }
 
-
-
     private static String getUserOptionNewDraw(int[] jackpot) {
         System.out.println("---------------------------------------------------------------------------" +
                 "----------------------------------------");
@@ -390,18 +275,28 @@ public class Main {
         return Validation.validateMenu(options);
     }
 
-    private static String getUserFieldEditOption() {
+    private static void viewCustomer() {
+
+        System.out.printf("%-7s%-22s%-22s%-22s%-22s%-22s\n","ID", "Name","Birthdate","Address","Phone","Email");
         System.out.println("---------------------------------------------------------------------------" +
-                "---------------------------------");
-        System.out.println("1. Address");
-        System.out.println("2. Owner");
-        System.out.println("3. Email");
-        System.out.println("4. Phone");
-        System.out.println("5. Account Balance");
-        System.out.println("6. Return");
-        String[] options = {"1", "2", "3","4", "5", "6"};
-        return Validation.validateMenu(options);
+                "----------------------------------------");
+        for (Customer cus : customerList.values())
+            System.out.println(cus);
+        System.out.println("---------------------------------------------------------------------------" +
+                "----------------------------------------");
+
     }
 
+    private static void viewShop() {
+
+        System.out.printf("%-7s%-22s%-22s%-22s%-22s%-22s\n","Code","Address","Owner","Email","Phone","Account Balance");
+        System.out.println("---------------------------------------------------------------------------" +
+                "----------------------------------------");
+        for (Shop shop : shopList.values())
+            System.out.println(shop);
+        System.out.println("---------------------------------------------------------------------------" +
+                "----------------------------------------");
+
+    }
 
 }

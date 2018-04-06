@@ -3,18 +3,20 @@ package rmit;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validation {
+
     public static String validateMenu(String[] options) {
         Scanner sc = new Scanner(System.in);
         String userOption=null;
         boolean valid = false;
         while (!valid) {
-            System.out.print("Please choose an option: ");
+            System.out.println("Please choose an option: ");
             userOption = sc.nextLine();
             if (!Arrays.asList(options).contains(userOption))
                 System.out.println("Invalid option!");
@@ -26,27 +28,28 @@ public class Validation {
 
     public int getId(Set<Integer> ids) {
         Scanner sc = new Scanner(System.in);
-        int input=0;
+        int id=0;
+        String input;
         while (true) {
-            System.out.print("Please enter the customer/shop ID to edit/delete: ");
-            if (!sc.hasNextInt()) {
-                sc.nextLine();
+            System.out.println("Please enter the customer/shop ID to edit/delete: ");
+            input = sc.nextLine();
+            if (!input.matches("\\d+")) {
                 System.out.println("Invalid ID!");
             }
             else {
-                input = sc.nextInt();
-                if (!ids.contains(input)) System.out.println("Invalid ID!");
+                id = Integer.valueOf(input);
+                if (!ids.contains(id)) System.out.println("Invalid ID!");
                 else break;
             }
         }
-        return input;
+        return id;
     }
 
     public double getAccountBalance(){
         double AccountBalanceInput;
         Scanner sc;
         while(true){
-            System.out.print("Please enter the shop's Account Balance: ");
+            System.out.println("Please enter the shop's Account Balance: ");
             sc = new Scanner(System.in);
             if(sc.hasNextDouble()){
                 AccountBalanceInput = sc.nextDouble();
@@ -58,31 +61,15 @@ public class Validation {
         return AccountBalanceInput;
     }
 
-    public int getCodeInput(){
-        int CodeInput;
-        Scanner sc;
-        while(true){
-            System.out.print("Please enter the shop's code: ");
-            sc = new Scanner(System.in);
-            if(sc.hasNextInt()){
-                CodeInput = sc.nextInt();
-                sc.nextLine();
-                break;
-            }else {
-                System.out.println("Wrong Input!!!");
-            }
-        }
-        return CodeInput;
-    }
 
     public String getName() {
         Scanner sc = new Scanner(System.in);
         String str=null;
         boolean valid = false;
         while (!valid) {
-            System.out.print("Please enter the customer's name: ");
+            System.out.println("Please enter the customer's name: ");
             str = sc.nextLine();
-            if (str.equals(""))
+            if (!str.matches("^[A-z]+$"))
                 System.out.println("Invalid name!");
             else valid = true;
         }
@@ -94,7 +81,7 @@ public class Validation {
         String str=null;
         boolean valid = false;
         while (!valid) {
-            System.out.print("Please enter the customer's address: ");
+            System.out.println("Please enter the customer's address: ");
             str = sc.nextLine();
             if (str.equals(""))
                 System.out.println("Invalid address!");
@@ -108,19 +95,13 @@ public class Validation {
         String phone=null;
         boolean valid = false;
         while (!valid) {
-            System.out.print("Please enter the customer's phone number(10 digits): ");
+            System.out.println("Please enter the customer's phone number(10 digits): ");
             phone = sc.nextLine();
-            if (!isValidPhone(phone))
+            if (!phone.matches("^[0-9]{10}$"))
                 System.out.println("Invalid phone number!");
             else valid = true;
         }
         return phone;
-    }
-
-    private boolean isValidPhone(String phone) {
-        Pattern pattern = Pattern.compile("^[0-9]{10}$");
-        Matcher matcher = pattern.matcher(phone);
-        return matcher.matches();
     }
 
     public String getBirthdate() {
@@ -128,7 +109,7 @@ public class Validation {
         String inputDate=null;
         boolean valid = false;
         while (!valid) {
-            System.out.print("Please enter the customer's birthdate (YYYY-MM-DD): ");
+            System.out.println("Please enter the customer's birthdate (YYYY-MM-DD): ");
             inputDate = sc.nextLine();
             if (!isValidDate(inputDate))
                 System.out.println("Invalid birthdate!");
@@ -142,21 +123,14 @@ public class Validation {
         String email=null;
         boolean valid = false;
         while (!valid) {
-            System.out.print("Please enter the customer's email: ");
+            System.out.println("Please enter the customer's email: ");
             email = sc.nextLine();
-            if (!isValidEmail(email))
+            if (!email.matches("^.+@.+\\..+$"))
                 System.out.println("Invalid email!");
             else valid = true;
         }
         return email;
     }
-
-    private boolean isValidEmail(String email) {
-        Pattern pattern = Pattern.compile("^.+@.+\\..+$");
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
-
 
     private boolean isValidDate(String inputDate) {
         try {

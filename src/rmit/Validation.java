@@ -18,9 +18,13 @@ public class Validation {
         while (!valid) {
             System.out.println("Please choose an option: ");
             userOption = sc.nextLine();
-            if (!Arrays.asList(options).contains(userOption))
+            if(userOption.trim().length() == 0){
+                System.out.println("Can not enter blank input!!");
+            }else if (!Arrays.asList(options).contains(userOption)) {
                 System.out.println("Invalid option!");
-            else valid = true;
+            }else {
+                valid = true;
+            }
         }
         return userOption;
     }
@@ -33,7 +37,9 @@ public class Validation {
         while (true) {
             System.out.println("Please enter the customer/shop ID to edit/delete: ");
             input = sc.nextLine();
-            if (!input.matches("\\d+")) {
+            if(input.trim().length() == 0) {
+                System.out.println("Can not enter blank input!!");
+            }else if (!input.matches("\\d+")) {
                 System.out.println("Invalid ID!");
             }
             else {
@@ -54,9 +60,13 @@ public class Validation {
         while (!valid) {
             System.out.println("Please enter the customer's name: ");
             str = sc.nextLine();
-            if (!str.matches("^[A-z]+$"))
+            if(str.trim().length() == 0) {
+                System.out.println("Can not enter blank input!!");
+            }else if (!str.matches("^[A-z]+$")) {
                 System.out.println("Invalid name!");
-            else valid = true;
+            }else{
+                valid = true;
+            }
         }
         return str;
     }
@@ -68,8 +78,8 @@ public class Validation {
         while (!valid) {
             System.out.println("Please enter the customer's address: ");
             str = sc.nextLine();
-            if (str.equals(""))
-                System.out.println("Invalid address!");
+            if (str.trim().length() == 0)
+                System.out.println("Can not enter blank input!!");
             else valid = true;
         }
         return str;
@@ -82,7 +92,9 @@ public class Validation {
         while (!valid) {
             System.out.println("Please enter the customer's phone number(10 digits): ");
             phone = sc.nextLine();
-            if (!phone.matches("^[0-9]{10}$"))
+            if (phone.trim().length() == 0){
+                System.out.println("Can not enter blank input!!");
+            }else if (!phone.matches("^[0-9]{10}$"))
                 System.out.println("Invalid phone number!");
             else valid = true;
         }
@@ -96,9 +108,13 @@ public class Validation {
         while (!valid) {
             System.out.println("Please enter the customer's birthdate (YYYY-MM-DD): ");
             inputDate = sc.nextLine();
-            if (!isValidDate(inputDate))
+            if (inputDate.trim().length() == 0) {
+                System.out.println("Can not enter blank input!!");
+            }else if (!isValidDate(inputDate)) {
                 System.out.println("Invalid birthdate!");
-            else valid = true;
+            }else{
+                valid = true;
+            }
         }
         return inputDate;
     }
@@ -110,9 +126,13 @@ public class Validation {
         while (!valid) {
             System.out.println("Please enter the customer's email: ");
             email = sc.nextLine();
-            if (!email.matches("^.+@.+\\..+$"))
+            if (email.trim().length() == 0) {
+                System.out.println("Can not enter blank input!!");
+            }else if (!email.matches("^.+@.+\\..+$")) {
                 System.out.println("Invalid email!");
-            else valid = true;
+            }else{
+                valid = true;
+            }
         }
         return email;
     }

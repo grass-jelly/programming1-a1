@@ -35,10 +35,12 @@ public class ValidationShop extends Validation {
             String temp = sc.nextLine();
             if(temp.trim().length() == 0){
                 System.out.println("Can not enter blank input!!");
-            }else if (!temp.trim().matches("\\d+")){
-                System.out.println("Wrong Input!!!");
-            }else{
+            }else if (temp.trim().matches("[0-9]+(\\.[0-9]+)")){
                 return Double.valueOf(temp);
+            }else if (temp.trim().matches("\\d+")) {
+                return Double.valueOf(temp);
+            }else{
+                System.out.println("Wrong Input!!!");
             }
         }
     }

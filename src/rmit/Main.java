@@ -1,5 +1,8 @@
 package rmit;
 
+import rmit.Singleton.Validation;
+import rmit.Singleton.ValidationShop;
+
 import java.util.*;
 
 public class Main {
@@ -26,6 +29,7 @@ public class Main {
                 "0986292444", 800000);
         Shop shop2 = new Shop(shopID++, "256 Dinh Tien Hoang, Q.GoVap", "Nhut Khanh", "khanh@gmail.com",
                 "0986393456", 1000000);
+
         shopList.put(1, shop1);
         shopList.put(2, shop2);
 
@@ -78,7 +82,7 @@ public class Main {
         String userOption = getUserOptionCustomer();
         int id;
         while (!userOption.equals("5")) {
-            Validation v = new Validation();
+            Validation v = Validation.getInstance();
             switch (userOption) {
                 case "1":
                     id = customerID++;
@@ -131,7 +135,7 @@ public class Main {
     private static void shop(Map<Integer, Shop> shopList) {
         String userOption = getUserOptionShop();
         int id;
-        ValidationShop v = new ValidationShop();
+        ValidationShop v = ValidationShop.getInstance();
 
         while (!userOption.equals("5")) {
             switch (userOption) {

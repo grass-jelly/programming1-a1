@@ -1,15 +1,20 @@
-package rmit;
+package rmit.Singleton;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Validation {
+
+    //Validation Singletone
+    private static Validation instance = new Validation();
+    private Validation() {
+    }
+    public static Validation getInstance(){
+        return instance;
+    }
 
     public static String validateMenu(String[] options) {
         Scanner sc = new Scanner(System.in);

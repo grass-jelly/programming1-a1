@@ -1,11 +1,20 @@
-package rmit;
+package rmit.Singleton;
 
 import java.util.Scanner;
 import java.util.Set;
 
-public class ValidationShop extends Validation {
+public class ValidationShop {
 
-    @Override
+    //ValidationShop Singleton
+    private static ValidationShop instance = new ValidationShop();
+
+    private ValidationShop() {
+    }
+
+    public static ValidationShop getInstance(){
+        return instance;
+    }
+
     public int getId(Set<Integer> ids) {
         Scanner sc = new Scanner(System.in);
         int id;
@@ -45,7 +54,6 @@ public class ValidationShop extends Validation {
         }
     }
 
-    @Override
     public String getAddress() {
         Scanner sc = new Scanner(System.in);
         String str=null;
@@ -60,7 +68,6 @@ public class ValidationShop extends Validation {
         return str;
     }
 
-    @Override
     public String getPhone() {
         Scanner sc = new Scanner(System.in);
         String phone=null;
@@ -77,7 +84,6 @@ public class ValidationShop extends Validation {
         return phone;
     }
 
-    @Override
     public String getName() {
         Scanner sc = new Scanner(System.in);
         String str=null;
@@ -94,7 +100,6 @@ public class ValidationShop extends Validation {
         return str;
     }
 
-    @Override
     public String getEmail() {
         Scanner sc = new Scanner(System.in);
         String email=null;

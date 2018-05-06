@@ -1,9 +1,28 @@
 package rmit;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class Drawing {
+
+    List<Customer> customers = new ArrayList<>();
+
+    String jackpot;
+
+    public String getJackpot() {
+        return jackpot;
+    }
+
+    public void setJackpot(String jackpot) {
+        this.jackpot = jackpot;
+
+        // inform all subscribers
+        for (Customer obs : customers) {
+            obs.getNotified(this);
+        }
+    }
 
     public int[] generate() {
         int[] numSet = new int[6];
@@ -12,6 +31,7 @@ public class Drawing {
             numSet[i] = random.nextInt(46);
         }
         Arrays.sort(numSet);
+        setJackpot(Arrays.toString(numSet));
         return numSet;
     }
 

@@ -5,15 +5,19 @@ import java.util.*;
 public class Main {
     private static Map<Integer, Customer> customerList = new HashMap<>();
     private static Map<Integer, Shop> shopList = new HashMap<>();
+    private static Drawing drawing = new Drawing();
     private static int customerID=1, shopID=1;
     public static void main(String[] args) {
 
         Customer customer1 = new Customer(customerID++, "Linh Do", "1997-05-04", "702 Nguyen Van Linh, D7",
                 "0912900300", "linhdo@gmail.com");
+        customer1.subscribe(drawing);
         Customer customer2 = new Customer(customerID++, "John Doe", "1990-09-01", "42 Nguyen Hue, D1",
                 "0912900400", "johndoe@gmail.com");
+        customer2.subscribe(drawing);
         Customer customer3 = new Customer(customerID++, "Mary Angelou", "1980-04-04",
                 "1050 College St, D2", "0912900800", "maryangelou@gmail.com");
+        customer3.subscribe(drawing);
         customerList.put(1, customer1);
         customerList.put(2, customer2);
         customerList.put(3, customer3);
@@ -48,7 +52,6 @@ public class Main {
     private static void drawing() {
         String userOption = getUserOptionDrawing();
         while (userOption.equals("1")) {
-            Drawing drawing = new Drawing();
             int[] jackpot = drawing.generate();
             System.out.println("Jackpot: " + Arrays.toString(jackpot));
             userOption = getUserOptionDrawing();
@@ -79,7 +82,9 @@ public class Main {
             switch (userOption) {
                 case "1":
                     id = customerID++;
-                    customerList.put(id, new Customer(id, v.getName(), v.getBirthdate(), v.getAddress(), v.getPhone(), v.getEmail()));
+                    Customer cus = new Customer(id, v.getName(), v.getBirthdate(), v.getAddress(), v.getPhone(), v.getEmail());
+                    customerList.put(id, cus);
+                    cus.subscribe(drawing);
                     System.out.println("Add Successful!!");
                     break;
                 case "2":
@@ -91,7 +96,8 @@ public class Main {
                     Customer customer = customerList.get(id);
                     switch (userOption) {
                         case "1":
-                            customer.setName(v.getName());
+                            CustomerSetNameCommand cm = new CustomerSetNameCommand(customer, v.getName());
+                            cm.execute();
                             break;
                         case "2":
                             customer.setBirthdate(v.getBirthdate());

@@ -17,6 +17,14 @@ public class Customer {
         this.email = email;
     }
 
+    public void getNotified(Drawing drawing) {
+        System.out.println("The drawing result is: "+ drawing.getJackpot());
+    }
+
+    public void subscribe(Drawing drawing){
+        drawing.customers.add(this);
+    }
+
     @Override
     public String toString() {
         return String.format("%05d  %-20.20s  %-20.20s  %-20.20s  %-20.20s  %-20.20s",this.id, this.name,this.birthdate,this.address,this.phone,this.email);

@@ -35,7 +35,7 @@ public class Validation {
         int id;
         String input;
         while (true) {
-            System.out.println("Please enter the customer/shop ID to edit/delete: ");
+            System.out.println("Please enter the customer ID to edit/delete: ");
             input = sc.nextLine();
             if(input.trim().length() == 0) {
                 System.out.println("Can not enter blank input!!");

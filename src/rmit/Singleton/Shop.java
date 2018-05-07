@@ -1,4 +1,4 @@
-package rmit;
+package rmit.Singleton;
 
 public class Shop {
     private int Code;

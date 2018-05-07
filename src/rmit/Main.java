@@ -1,6 +1,5 @@
 package rmit;
 
-import rmit.Singleton.FactoryShopSingleton;
 import rmit.Singleton.Validation;
 import rmit.Singleton.ValidationShop;
 import rmit.Singleton.Shop;
@@ -12,7 +11,6 @@ public class Main {
     private static Map<Integer, Shop> shopList = new HashMap<>();
     private static Drawing drawing = new Drawing();
     private static int customerID=1, shopID=1;
-    private static FactoryShopSingleton factoryShop = FactoryShopSingleton.getInstance();
     public static void main(String[] args) {
 
         Customer customer1 = new Customer(customerID++, "Linh Do", "1997-05-04", "702 Nguyen Van Linh, D7",
@@ -28,9 +26,9 @@ public class Main {
         customerList.put(2, customer2);
         customerList.put(3, customer3);
 
-        Shop shop1 = factoryShop.create(shopID++, "100 Dien Bien Phu, Q10", "Nghi Quynh", "quynh@gmail.com",
+        Shop shop1 = Shop.create(shopID++,"100 Dien Bien Phu, Q10", "Nghi Quynh", "quynh@gmail.com",
                 "0986292444", 800000);
-        Shop shop2 = factoryShop.create(shopID++, "256 Dinh Tien Hoang, Q.GoVap", "Nhut Khanh", "khanh@gmail.com",
+        Shop shop2 = Shop.create(shopID++,"256 Dinh Tien Hoang, Q.GoVap", "Nhut Khanh", "khanh@gmail.com",
                 "0986393456", 1000000);
 
         shopList.put(1, shop1);
@@ -144,7 +142,7 @@ public class Main {
             switch (userOption) {
                 case "1":
                     id = shopID++;
-                    shopList.put(id, factoryShop.create(id, v.getAddress(), v.getName(), v.getEmail(), v.getPhone(),
+                    shopList.put(id, Shop.create(id, v.getAddress(), v.getName(), v.getEmail(), v.getPhone(),
                             v.getAccountBalance()));
                     System.out.println("Add Successful!!");
                     break;

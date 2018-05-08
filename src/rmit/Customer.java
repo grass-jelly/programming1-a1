@@ -20,7 +20,7 @@ public class Customer {
     }
 
     public void getNotified(Drawing drawing) {
-        System.out.println("The drawing result is: "+ drawing.getJackpot());
+        System.out.printf("(Notification - Customer ID: %05d) The drawing result is: %s\n", id, drawing.getJackpot());
     }
 
     public void subscribe(Decorator drawing){

@@ -26,7 +26,7 @@ public class ListShop {
         return tmpshop;
     }
 
-    public Map<Integer, Shop> getlsShop(){
+    public Map<Integer, Shop> getLsShop(){
         return lsShop;
     }
 }

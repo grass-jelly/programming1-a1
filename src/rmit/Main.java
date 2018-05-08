@@ -1,5 +1,6 @@
 package rmit;
 
+import rmit.singleton.ListCustomer;
 import rmit.singleton.ListShop;
 import rmit.singleton.Validation;
 import rmit.singleton.ValidationShop;
@@ -10,22 +11,24 @@ import rmit.decorator.TimeDrawingDecorator;
 import java.util.*;
 
 public class Main {
-    private static Map<Integer, Customer> customerList = new HashMap<>();
-    // instance
+    //Customer Singleton
+    private  static ListCustomer manageCustomer = ListCustomer.getInstance();
+    private static Map<Integer, Customer> customerList = manageCustomer.getLsCustomer();
+    //Shop Singleton
     private static ListShop manageShop = ListShop.getInstance();
-    private static Map<Integer, Shop> shopList = manageShop.getlsShop();
+    private static Map<Integer, Shop> shopList = manageShop.getLsShop();
 
     private static Decorator drawing = new TimeDrawingDecorator(new Drawing());
     private static int customerID=1, shopID=1;
     public static void main(String[] args) {
 
-        Customer customer1 = new Customer(customerID++, "Linh Do", "1997-05-04", "702 Nguyen Van Linh, D7",
+        Customer customer1 = manageCustomer.addCustomer(customerID++, "Linh Do", "1997-05-04", "702 Nguyen Van Linh, D7",
                 "0912900300", "linhdo@gmail.com");
         customer1.subscribe(drawing);
-        Customer customer2 = new Customer(customerID++, "John Doe", "1990-09-01", "42 Nguyen Hue, D1",
+        Customer customer2 = manageCustomer.addCustomer(customerID++, "John Doe", "1990-09-01", "42 Nguyen Hue, D1",
                 "0912900400", "johndoe@gmail.com");
         customer2.subscribe(drawing);
-        Customer customer3 = new Customer(customerID++, "Mary Angelou", "1980-04-04",
+        Customer customer3 = manageCustomer.addCustomer(customerID++, "Mary Angelou", "1980-04-04",
                 "1050 College St, D2", "0912900800", "maryangelou@gmail.com");
         customer3.subscribe(drawing);
         customerList.put(1, customer1);
@@ -96,7 +99,8 @@ public class Main {
             switch (userOption) {
                 case "1":
                     id = customerID++;
-                    Customer cus = new Customer(id, v.getName(), v.getBirthdate(), v.getAddress(), v.getPhone(), v.getEmail());
+                    Customer cus = manageCustomer.addCustomer(id, v.getName(), v.getBirthdate(), v.getAddress(),
+                            v.getPhone(), v.getEmail());
                     customerList.put(id, cus);
                     cus.subscribe(drawing);
                     System.out.println("Add Successful!!");

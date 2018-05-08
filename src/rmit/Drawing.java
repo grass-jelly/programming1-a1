@@ -1,13 +1,15 @@
 package rmit;
 
+import rmit.decorator.Decorator;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class Drawing {
+public class Drawing implements Decorator{
 
-    List<Customer> customers = new ArrayList<>();
+    //List<Customer> customers = new ArrayList<>();
 
     String jackpot;
 
@@ -31,6 +33,7 @@ public class Drawing {
             numSet[i] = random.nextInt(46);
         }
         Arrays.sort(numSet);
+
         setJackpot(Arrays.toString(numSet));
         return numSet;
     }

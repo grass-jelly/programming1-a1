@@ -1,11 +1,11 @@
-package rmit.Singleton;
+package rmit.singleton;
 
 import java.util.Scanner;
 import java.util.Set;
 
 public class ValidationShop {
 
-    //ValidationShop Singleton
+    //ValidationShop singleton
     private static ValidationShop instance = new ValidationShop();
 
     private ValidationShop() {

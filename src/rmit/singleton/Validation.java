@@ -1,4 +1,4 @@
-package rmit.Singleton;
+package rmit.singleton;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;

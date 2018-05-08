@@ -1,15 +1,18 @@
 package rmit;
 
-import rmit.Singleton.Validation;
-import rmit.Singleton.ValidationShop;
-import rmit.Singleton.Shop;
+import rmit.singleton.Validation;
+import rmit.singleton.ValidationShop;
+import rmit.command.CustomerSetNameCommand;
+import rmit.decorator.Decorator;
+import rmit.decorator.TimeDrawingDecorator;
 
 import java.util.*;
 
 public class Main {
     private static Map<Integer, Customer> customerList = new HashMap<>();
+    // instance
     private static Map<Integer, Shop> shopList = new HashMap<>();
-    private static Drawing drawing = new Drawing();
+    private static Decorator drawing = new TimeDrawingDecorator(new Drawing());
     private static int customerID=1, shopID=1;
     public static void main(String[] args) {
 

@@ -1,6 +1,9 @@
-package rmit;
+package rmit.command;
 
-public class CustomerSetNameCommand implements Command{
+import rmit.Customer;
+import rmit.command.Command;
+
+public class CustomerSetNameCommand implements Command {
     protected Customer customer;
     protected String newName;
 

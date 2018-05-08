@@ -1,5 +1,7 @@
 package rmit;
 
+import rmit.decorator.Decorator;
+
 public class Customer {
     private int id;
     private String name;
@@ -21,7 +23,7 @@ public class Customer {
         System.out.println("The drawing result is: "+ drawing.getJackpot());
     }
 
-    public void subscribe(Drawing drawing){
+    public void subscribe(Decorator drawing){
         drawing.customers.add(this);
     }
 

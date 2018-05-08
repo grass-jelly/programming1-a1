@@ -1,5 +1,6 @@
 package rmit;
 
+import rmit.singleton.ListShop;
 import rmit.singleton.Validation;
 import rmit.singleton.ValidationShop;
 import rmit.command.CustomerSetNameCommand;
@@ -11,7 +12,9 @@ import java.util.*;
 public class Main {
     private static Map<Integer, Customer> customerList = new HashMap<>();
     // instance
-    private static Map<Integer, Shop> shopList = new HashMap<>();
+    private static ListShop manageShop = ListShop.getInstance();
+    private static Map<Integer, Shop> shopList = manageShop.getlsShop();
+
     private static Decorator drawing = new TimeDrawingDecorator(new Drawing());
     private static int customerID=1, shopID=1;
     public static void main(String[] args) {
@@ -29,13 +32,16 @@ public class Main {
         customerList.put(2, customer2);
         customerList.put(3, customer3);
 
-        Shop shop1 = Shop.create(shopID++,"100 Dien Bien Phu, Q10", "Nghi Quynh", "quynh@gmail.com",
+
+
+        Shop shop1 = manageShop.addShop(shopID++,"100 Dien Bien Phu, Q10", "Nghi Quynh", "quynh@gmail.com",
                 "0986292444", 800000);
-        Shop shop2 = Shop.create(shopID++,"256 Dinh Tien Hoang, Q.GoVap", "Nhut Khanh", "khanh@gmail.com",
+        Shop shop2 = manageShop.addShop(shopID++,"256 Dinh Tien Hoang, Q.GoVap", "Nhut Khanh", "khanh@gmail.com",
                 "0986393456", 1000000);
 
         shopList.put(1, shop1);
         shopList.put(2, shop2);
+
 
         String userOption = getUserOptionMain();
         while (!userOption.equals("5")) {
@@ -145,7 +151,7 @@ public class Main {
             switch (userOption) {
                 case "1":
                     id = shopID++;
-                    shopList.put(id, Shop.create(id, v.getAddress(), v.getName(), v.getEmail(), v.getPhone(),
+                    shopList.put(id, manageShop.addShop(id, v.getAddress(), v.getName(), v.getEmail(), v.getPhone(),
                             v.getAccountBalance()));
                     System.out.println("Add Successful!!");
                     break;

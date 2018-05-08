@@ -9,18 +9,16 @@ public class Shop {
     private double accountBalance;
 
 
-    private Shop() {
+    public Shop() {
     }
 
-    public static Shop create(int code, String address, String owner, String email, String phone, double accountBalance) {
-        Shop tmpshop = new Shop();
-        tmpshop.setCode(code);
-        tmpshop.setAddress(address);
-        tmpshop.setOwner(owner);
-        tmpshop.setPhone(phone);
-        tmpshop.setEmail(email);
-        tmpshop.setAccountBalance(accountBalance);
-        return tmpshop;
+    public Shop(int code, String address, String owner, String phone, String email, double accountBalance) {
+        Code = code;
+        Address = address;
+        Owner = owner;
+        Phone = phone;
+        Email = email;
+        this.accountBalance = accountBalance;
     }
 
     @Override

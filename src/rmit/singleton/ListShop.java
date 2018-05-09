@@ -21,10 +21,6 @@ public class ListShop {
 
     }
 
-    public Shop addShop(int code, String address, String owner, String phone, String email, double accountBalance){
-        Shop tmpshop = new Shop(code, address, owner, phone, email, accountBalance);
-        return tmpshop;
-    }
 
     public Map<Integer, Shop> getLsShop(){
         return lsShop;

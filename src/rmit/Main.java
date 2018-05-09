@@ -14,6 +14,7 @@ public class Main {
     //Customer Singleton
     private  static ListCustomer manageCustomer = ListCustomer.getInstance();
     private static Map<Integer, Customer> customerList = manageCustomer.getLsCustomer();
+
     //Shop Singleton
     private static ListShop manageShop = ListShop.getInstance();
     private static Map<Integer, Shop> shopList = manageShop.getLsShop();
@@ -22,13 +23,13 @@ public class Main {
     private static int customerID=1, shopID=1;
     public static void main(String[] args) {
 
-        Customer customer1 = manageCustomer.addCustomer(customerID++, "Linh Do", "1997-05-04", "702 Nguyen Van Linh, D7",
+        Customer customer1 = new Customer(customerID++, "Linh Do", "1997-05-04", "702 Nguyen Van Linh, D7",
                 "0912900300", "linhdo@gmail.com");
         customer1.subscribe(drawing);
-        Customer customer2 = manageCustomer.addCustomer(customerID++, "John Doe", "1990-09-01", "42 Nguyen Hue, D1",
+        Customer customer2 = new Customer(customerID++, "John Doe", "1990-09-01", "42 Nguyen Hue, D1",
                 "0912900400", "johndoe@gmail.com");
         customer2.subscribe(drawing);
-        Customer customer3 = manageCustomer.addCustomer(customerID++, "Mary Angelou", "1980-04-04",
+        Customer customer3 = new Customer(customerID++, "Mary Angelou", "1980-04-04",
                 "1050 College St, D2", "0912900800", "maryangelou@gmail.com");
         customer3.subscribe(drawing);
         customerList.put(1, customer1);
@@ -37,9 +38,9 @@ public class Main {
 
 
 
-        Shop shop1 = manageShop.addShop(shopID++,"100 Dien Bien Phu, Q10", "Nghi Quynh", "quynh@gmail.com",
+        Shop shop1 = new Shop(shopID++,"100 Dien Bien Phu, Q10", "Nghi Quynh", "quynh@gmail.com",
                 "0986292444", 800000);
-        Shop shop2 = manageShop.addShop(shopID++,"256 Dinh Tien Hoang, Q.GoVap", "Nhut Khanh", "khanh@gmail.com",
+        Shop shop2 = new Shop(shopID++,"256 Dinh Tien Hoang, Q.GoVap", "Nhut Khanh", "khanh@gmail.com",
                 "0986393456", 1000000);
 
         shopList.put(1, shop1);
@@ -99,7 +100,7 @@ public class Main {
             switch (userOption) {
                 case "1":
                     id = customerID++;
-                    Customer cus = manageCustomer.addCustomer(id, v.getName(), v.getBirthdate(), v.getAddress(),
+                    Customer cus = new Customer(id, v.getName(), v.getBirthdate(), v.getAddress(),
                             v.getPhone(), v.getEmail());
                     customerList.put(id, cus);
                     cus.subscribe(drawing);
@@ -155,7 +156,7 @@ public class Main {
             switch (userOption) {
                 case "1":
                     id = shopID++;
-                    shopList.put(id, manageShop.addShop(id, v.getAddress(), v.getName(), v.getEmail(), v.getPhone(),
+                    shopList.put(id, new Shop(id, v.getAddress(), v.getName(), v.getEmail(), v.getPhone(),
                             v.getAccountBalance()));
                     System.out.println("Add Successful!!");
                     break;

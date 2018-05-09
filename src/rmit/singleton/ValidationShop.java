@@ -93,7 +93,7 @@ public class ValidationShop {
             str = sc.nextLine();
             if (str.trim().length() == 0) {
                 System.out.println("Can not enter blank input!!");
-            }else if (!str.matches("^[A-z]+$"))
+            }else if (!str.matches("[a-zA-Z][a-zA-Z ]*"))
                 System.out.println("Invalid name!");
             else valid = true;
         }

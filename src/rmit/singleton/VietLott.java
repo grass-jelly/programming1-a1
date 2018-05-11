@@ -4,6 +4,7 @@ import rmit.Customer;
 import rmit.Drawing;
 import rmit.Shop;
 import rmit.command.CustomerSetNameCommand;
+import rmit.command.ShopSetOwnerCommand;
 import rmit.decorator.Decorator;
 import rmit.decorator.TimeDrawingDecorator;
 
@@ -184,7 +185,8 @@ public class VietLott {
                             shop.setAddress(v.getAddress());
                             break;
                         case "2":
-                            shop.setOwner(v.getName());
+                            ShopSetOwnerCommand cm = new ShopSetOwnerCommand(shop, v.getName());
+                            cm.execute();
                             break;
                         case "3":
                             shop.setPhone(v.getPhone());

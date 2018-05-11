@@ -1,5 +1,10 @@
 package rmit.singleton;
 
+import rmit.exception.AccBalanceException;
+import rmit.exception.NameException;
+import rmit.exception.TestAccBalance;
+import rmit.exception.TestName;
+
 import java.util.Scanner;
 import java.util.Set;
 
@@ -37,20 +42,26 @@ public class ValidationShop {
     }
 
     public double getAccountBalance(){
-        Scanner sc;
+        Scanner sc = new Scanner(System.in);
+        String temp = null;
         while(true){
             System.out.println("Please enter the shop's Account Balance: ");
-            sc = new Scanner(System.in);
-            String temp = sc.nextLine();
-            if(temp.trim().length() == 0){
-                System.out.println("Can not enter blank input!!");
-            }else if (temp.trim().matches("[0-9]+(\\.[0-9]+)")){
-                return Double.valueOf(temp);
-            }else if (temp.trim().matches("\\d+")) {
-                return Double.valueOf(temp);
+            temp = sc.nextLine();
+            if (!testAccBalance(temp)){
+                continue;
             }else{
-                System.out.println("Wrong Input!!!");
+                break;
             }
+        }
+        return Double.valueOf(temp);
+    }
+
+    public static boolean testAccBalance(String str) {
+        try {
+            return TestAccBalance.getAccountBalance(str);
+        } catch (AccBalanceException e) {
+            System.out.println(e.getMessage());
+            return false;
         }
     }
 

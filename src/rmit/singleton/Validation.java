@@ -1,5 +1,8 @@
 package rmit.singleton;
 
+import rmit.exception.NameException;
+import rmit.exception.TestName;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
@@ -58,22 +61,29 @@ public class Validation {
 
 
 
-    public String getName() {
+    public String getName(){
         Scanner sc = new Scanner(System.in);
         String str=null;
-        boolean valid = false;
-        while (!valid) {
+        while (true) {
             System.out.println("Please enter the customer's name: ");
             str = sc.nextLine();
-            if(str.trim().length() == 0) {
-                System.out.println("Can not enter blank input!!");
-            }else if (!str.matches("[a-zA-Z][a-zA-Z ]*")) {
-                System.out.println("Invalid name!");
-            }else{
-                valid = true;
+            if (!testName(str)){
+                continue;
+            }
+            else{
+                break;
             }
         }
         return str;
+    }
+
+    public static boolean testName(String str) {
+        try {
+            return TestName.getName(str);
+        } catch (NameException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     public String getAddress() {

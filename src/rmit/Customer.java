@@ -19,6 +19,7 @@ public class Customer {
         this.email = email;
     }
 
+    // Observer pattern
     public void getNotified(Drawing drawing) {
         System.out.printf("(Notification - Customer ID: %05d) The drawing result is: %s\n", id, drawing.getJackpot());
     }

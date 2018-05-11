@@ -9,8 +9,6 @@ import java.util.Random;
 
 public class Drawing implements Decorator{
 
-    //List<Customer> customers = new ArrayList<>();
-
     String jackpot;
 
     public String getJackpot() {
